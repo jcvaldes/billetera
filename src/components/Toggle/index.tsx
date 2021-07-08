@@ -1,6 +1,6 @@
 import React, { useState }  from 'react';
-import { Container, ToggleLabel } from './styles';
-import Switch from 'react-switch';
+import { Container, ToggleLabel, ToggleSelector } from './styles';
+
 
 const Toggle: React.FC = () => {
   const [toggle, setToggle] = useState(false);
@@ -12,7 +12,7 @@ const Toggle: React.FC = () => {
   return (
     <Container>
       <ToggleLabel>Light</ToggleLabel>
-      <Switch
+      <ToggleSelector
         checked={toggle}
         uncheckedIcon={false}
         checkedIcon={false}
