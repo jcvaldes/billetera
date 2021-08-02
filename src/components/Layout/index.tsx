@@ -1,12 +1,20 @@
-import React from "react";
-import { Container } from "./styles";
-const Layout: React.FC = () => {
-  return (
-    <div>
-      <Container>
-        <h1>Layout</h1>
-      </Container>
-    </div>
-  );
-};
+
+import React from 'react';
+
+import { Grid } from './styles';
+
+import MainHeader from '../MainHeader';
+import Aside from '../Aside';
+import Content from '../Content';
+
+const Layout: React.FC = () => (
+    <Grid>
+        <MainHeader />
+        <Aside />
+        <Content />
+      
+    </Grid>
+);
+
+
 export default Layout;
