@@ -8,7 +8,7 @@ export const Container = styled.div`
 export const ToggleLabel = styled.span`
   color: ${props => props.theme.colors.white};
 `;
-
+// Quiero personalizar un componente especifico
 export const ToggleSelector = styled(Switch).attrs<ReactSwitchProps>(
   ({ theme }) => ({
     onColor: theme.colors.info,

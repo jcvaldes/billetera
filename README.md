@@ -46,3 +46,6 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 create-react-app mi-cartera --template typescript
+
+# Iconos
+https://react-icons.github.io/react-icons/search?q=home
