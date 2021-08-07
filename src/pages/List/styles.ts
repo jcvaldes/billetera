@@ -5,3 +5,5 @@ export const Container = styled.div`
   color: ${props => props.theme.colors.white};
   grid-area: CT;
 `;
+
+export const Content = styled.div``;
