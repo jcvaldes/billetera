@@ -49,3 +49,6 @@ create-react-app mi-cartera --template typescript
 
 # Iconos
 https://react-icons.github.io/react-icons/search?q=home
+
+basado en 
+https://github.com/rodrigorgtic/minha-carteira-dashboard

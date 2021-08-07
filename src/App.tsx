@@ -4,13 +4,15 @@ import GlobalStyles from './styles/GlobalStyles';
 import Layout from './components/Layout/index';
 import dark from './styles/themes/dark';
 import Dashboard from './pages/Dashboard';
+import List from './pages/List/index';
 
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={dark}>
       <GlobalStyles />
       <Layout>
-        <Dashboard />
+        {/* <Dashboard /> */}
+        <List />
       </Layout>
     </ThemeProvider>
   );
