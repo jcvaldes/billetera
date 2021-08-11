@@ -2,7 +2,7 @@ import React from 'react';
 import ContentHeader from '../../components/ContentHeader';
 import HistoryFinanceCard from '../../components/HistoryFinanceCard';
 import SelectInput from '../../components/SelectInput';
-import { Container, Content } from './styles';
+import { Container, Content, Filters } from './styles';
 
 const List: React.FC = () => {
   const options = [
@@ -20,6 +20,10 @@ const List: React.FC = () => {
       <ContentHeader title="Salidas" lineColor="#F44C4E">
         <SelectInput options={options} />
       </ContentHeader>
+      <Filters>
+        <button type="button" className="tag-filter tag-filter-recurrent">Recurrentes</button>
+        <button type="button" className="tag-filter tag-filter-eventual">Eventuales</button>
+      </Filters>
       <Content>
         <HistoryFinanceCard
           tagColor="#E44C4E"
@@ -27,66 +31,7 @@ const List: React.FC = () => {
           subtitle="27/07/2020"
           amount="R$ 130,00"
         />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
+
       </Content>
     </Container>
   );
