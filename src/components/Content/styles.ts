@@ -5,7 +5,7 @@ export const Container = styled.div`
   color: ${(props) => props.theme.colors.white};
   grid-area: CT;
   padding: 25px;
-  height: 100vh;
+  height: calc(100vh - 70px);
   overflow-y: scroll;
 
   ::-webkit-scrollbar {
