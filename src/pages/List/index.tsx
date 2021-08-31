@@ -6,6 +6,8 @@ import { Container, Content, Filters } from './styles';
 import expenses from '../../repositories/expenses';
 import gains from '../../repositories/gains';
 import { useState } from 'react';
+import formatCurrency from '../../utils/formatCurrency';
+import formatDate from '../../utils/formatDate';
 
 interface IRouteParams {
   match: {
@@ -54,9 +56,9 @@ const List: React.FC<IRouteParams> = ({ match }) => {
       return {
         id: String(Math.random() * data.length),
         description: item.description,
-        amountFormatted: item.amount,
+        amountFormatted: formatCurrency(Number(item.amount)),
         frequency: item.frequency,
-        dataFormatted: item.date,
+        dataFormatted: formatDate(item.date),
         tagColor: item.frequency === 'recurrente' ? '#4E41F0' : '#F44C4E',
       }
     })
