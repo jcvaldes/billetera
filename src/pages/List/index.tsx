@@ -1,8 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import ContentHeader from '../../components/ContentHeader';
 import HistoryFinanceCard from '../../components/HistoryFinanceCard';
 import SelectInput from '../../components/SelectInput';
 import { Container, Content, Filters } from './styles';
+import expenses from '../../repositories/expenses';
+import gains from '../../repositories/gains';
+import { useState } from 'react';
 
 interface IRouteParams {
   match: {
@@ -12,8 +15,17 @@ interface IRouteParams {
     };
   };
 }
+interface IData {
+  id: string; // lo creo aleatoriamente porque en el repositorio no tiene id
+  description: string;
+  amountFormatted: string;
+  frequency: string;
+  dataFormatted: string;
+  tagColor: string;
+}
 // match está disponible gracias al react-router-dom
 const List: React.FC<IRouteParams> = ({ match }) => {
+  const [data, setData] = useState<IData[]>([]);
   // useMemo: hook para memorizar un valor
   const { type } = match.params;
   const title = useMemo(() => {
@@ -24,6 +36,9 @@ const List: React.FC<IRouteParams> = ({ match }) => {
     return type === 'entry-balance' ? '#F7931B' : '#F44C4E';
   }, [type]);
 
+  const listData = useMemo(() => {
+    return type === 'entry-balance' ? gains : expenses;
+  }, [type]);
   const months = [
     { value: 7, label: 'Julio' },
     { value: 8, label: 'Agosto' },
@@ -31,9 +46,22 @@ const List: React.FC<IRouteParams> = ({ match }) => {
   ];
   const years = [
     { value: 2020, label: 2020 },
-    { value: 2019, label: 2019 },
     { value: 2018, label: 2018 },
+    { value: 2019, label: 2019 },
   ];
+  useEffect(() => {
+    const response = listData.map(item => {
+      return {
+        id: String(Math.random() * data.length),
+        description: item.description,
+        amountFormatted: item.amount,
+        frequency: item.frequency,
+        dataFormatted: item.date,
+        tagColor: item.frequency === 'recurrente' ? '#4E41F0' : '#F44C4E',
+      }
+    })
+    setData(response);
+  }, []);
   return (
     <Container>
       <ContentHeader title={title} lineColor={lineColor}>
@@ -49,78 +77,18 @@ const List: React.FC<IRouteParams> = ({ match }) => {
         </button>
       </Filters>
       <Content>
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
-        <HistoryFinanceCard
-          tagColor="#E44C4E"
-          title="Cuenta de luz"
-          subtitle="27/07/2020"
-          amount="R$ 130,00"
-        />
+        {
+          data.map(item => (
+            <HistoryFinanceCard
+              key={item.id}
+              tagColor={item.tagColor}
+              title={item.description}
+              subtitle={item.dataFormatted}
+              amount={item.amountFormatted}
+            />
+          ))
+
+        }
       </Content>
     </Container>
   );
