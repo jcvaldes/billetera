@@ -8,6 +8,7 @@ import gains from '../../repositories/gains';
 import { useState } from 'react';
 import formatCurrency from '../../utils/formatCurrency';
 import formatDate from '../../utils/formatDate';
+import idGen from '../../utils/genIds';
 
 interface IRouteParams {
   match: {
@@ -27,7 +28,15 @@ interface IData {
 }
 // match está disponible gracias al react-router-dom
 const List: React.FC<IRouteParams> = ({ match }) => {
+  // lo uso para levantar los datos de los archivos de repositorio
   const [data, setData] = useState<IData[]>([]);
+  // quiero  un valor por defecto en el combo para el año y mes actual
+  const [monthSelected, setMonthSelected] = useState<string>(
+    String(new Date().getMonth() + 1),
+  );
+  const [yearSelected, setYearSelected] = useState<string>(
+    String(new Date().getFullYear()),
+  );
   // useMemo: hook para memorizar un valor
   const { type } = match.params;
   const title = useMemo(() => {
@@ -42,33 +51,64 @@ const List: React.FC<IRouteParams> = ({ match }) => {
     return type === 'entry-balance' ? gains : expenses;
   }, [type]);
   const months = [
+    { value: 1, label: 'Enero' },
+    { value: 2, label: 'Febrero' },
+    { value: 3, label: 'Marzo' },
+    { value: 4, label: 'Abril' },
+    { value: 5, label: 'Mayo' },
+    { value: 6, label: 'Junio' },
     { value: 7, label: 'Julio' },
     { value: 8, label: 'Agosto' },
     { value: 9, label: 'Septiembre' },
+    { value: 10, label: 'Octubre' },
+    { value: 11, label: 'Noviembre' },
+    { value: 12, label: 'Diciembre' },
   ];
   const years = [
-    { value: 2020, label: 2020 },
     { value: 2018, label: 2018 },
     { value: 2019, label: 2019 },
+    { value: 2020, label: 2020 },
+    { value: 2021, label: 2021 },
   ];
+
   useEffect(() => {
-    const response = listData.map(item => {
+    const filteredData = listData.filter((item) => {
+      const date = new Date(item.date);
+      const month = (date.getMonth() + 1).toString();
+      const year = date.getFullYear().toString();
+      return month === monthSelected && year === yearSelected;
+    });
+    // genero ids unicos a traves de una funcion generadora
+    const gen = idGen();
+    const formattedData = filteredData.map((item) => {
       return {
-        id: String(Math.random() * data.length),
+        // id: String(gen.next().value),
+        id: String(gen.next().value),
         description: item.description,
         amountFormatted: formatCurrency(Number(item.amount)),
         frequency: item.frequency,
         dataFormatted: formatDate(item.date),
         tagColor: item.frequency === 'recurrente' ? '#4E41F0' : '#F44C4E',
-      }
-    })
-    setData(response);
-  }, []);
+      };
+    });
+    console.log(formattedData);
+
+    setData(formattedData);
+  }, [listData, monthSelected, yearSelected, data.length]);
   return (
     <Container>
       <ContentHeader title={title} lineColor={lineColor}>
-        <SelectInput options={months} />
-        <SelectInput options={years} />
+        {/* <SelectInput options={months} onChange={(e) => console.log(e.target.value)} /> */}
+        <SelectInput
+          options={months}
+          onChange={(e) => setMonthSelected(e.target.value)}
+          defaultValue={monthSelected}
+        />
+        <SelectInput
+          options={years}
+          onChange={(e) => setYearSelected(e.target.value)}
+          defaultValue={yearSelected}
+        />
       </ContentHeader>
       <Filters>
         <button type="button" className="tag-filter tag-filter-recurrent">
@@ -79,8 +119,8 @@ const List: React.FC<IRouteParams> = ({ match }) => {
         </button>
       </Filters>
       <Content>
-        {
-          data.map(item => (
+        {data.map((item) => {
+          return (
             <HistoryFinanceCard
               key={item.id}
               tagColor={item.tagColor}
@@ -88,9 +128,8 @@ const List: React.FC<IRouteParams> = ({ match }) => {
               subtitle={item.dataFormatted}
               amount={item.amountFormatted}
             />
-          ))
-
-        }
+          );
+        })}
       </Content>
     </Container>
   );
