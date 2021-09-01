@@ -1,5 +1,5 @@
 export default [
-  {"description":"Energía eléctrica",      "amount":"150.55","type":"egreso","frequency":"recurrente","date":"2021-01-10"},
+  {"description":"Energía eléctrica",      "amount":"150.55","type":"egreso","frequency":"recurrente","date":"2020-01-10"},
   {"description":"Agua",                  "amount":"75.55", "type":"egreso","frequency":"recurrente","date":"2021-01-15"},
   {"description": "Teléfono",             "amount":"99.99", "type":"egreso","frequency":"recurrente","date":"2021-01-23"},
   {"description":"Plan de Salud",        "amount":"300.00","type":"egreso","frequency":"recurrente","date":"2021-01-23"},
